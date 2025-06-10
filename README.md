@@ -1,52 +1,90 @@
 # My Mediamo
 
+My Mediamo is a lightweight, browser-based remote media control app for your computer. It allows you to control media playback (play, pause, volume, next, previous) from any device connected to the same Wi-Fi network — no client-side installation required.
+
 ---
 
-## Installation
+## ⚙️ Features
 
-* Works smoothly on Python 3.9 and above.
-* Download the installation files.
-* Open a terminal in the **My-Mediamo** folder and run:
+- Play / Pause your media remotely
+- Control volume up/down
+- Skip to next or previous track
+- Works on any device with a browser (mobile, tablet, desktop)
+- Local network only — privacy-friendly
 
-  ```bash
-  pip install -r requirements.txt
-  ```
+---
 
-  This will install all necessary libraries.
-* To start the application, run:
+## 🛠️ Installation
 
-  ```bash
-  py app.py
-  ```
+### Requirements
+- Python 3.9 or above
+- `pip` package manager
 
-## Usage
+### Setup Steps
 
-1. Run the app with:
+1. Download or clone this repository:
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/My-Mediamo.git
+   cd My-Mediamo
+   ```
 
+2. Install required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Start the server:
    ```bash
    py app.py
    ```
-2. Open a Command Prompt and type:
 
+---
+
+## 📱 Usage
+
+1. Launch the app:
+   ```bash
+   py app.py
    ```
+
+2. On your host machine, open `CMD` and type:
+   ```bash
    ipconfig
    ```
-3. Locate the line labeled **IPv4 Address** and copy the address.
-   For example, if your IPv4 address is `192.000.0.000`, open your browser and navigate to:
 
+3. Copy your **IPv4 Address** (e.g., `192.168.1.100`).
+
+4. On another device (same Wi-Fi), open a browser and navigate to:
    ```
-   http://192.000.0.000:5000
+   http://192.168.1.100:5000
    ```
-4. The web interface should now be accessible and ready to use.
 
-# Critical Bugs
+5. You're ready to control your media remotely!
 
-- **SteelSeries Sonar:** Only affects Gaming audio; does not affect Media or other channels.
+---
 
-***If you find any bugs, please let us know!***  
+## 🐞 Known Issues
 
-## Upcoming Updates
+- **SteelSeries Sonar:** Only controls "Gaming" audio; Media and other outputs are unaffected.
 
-* Cover photos
-* Enhanced player control bar (displaying seconds, minutes, etc.)
-* Packaging as a standalone executable (EXE)
+> **Found a bug?** Please [open an issue](https://github.com/YOUR_USERNAME/My-Mediamo/issues) and help improve the project.
+
+---
+
+## 🚧 Upcoming Updates
+
+- Cover art display
+- Enhanced player control bar (minutes, seconds)
+- EXE version for Windows
+- Mobile UI improvements
+- QR-based device connection
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License. See [LICENSE](./LICENSE) for details.
+
+---
+
+Thank you for using My Mediamo! Contributions are welcome 🚀
