@@ -39,6 +39,12 @@
    ```
 4. The web interface should now be accessible and ready to use.
 
+# Critical Bugs
+
+- **SteelSeries Sonar:** Only affects Gaming audio; does not affect Media or other channels.
+
+***If you find any bugs, please let us know!***  
+
 ## Upcoming Updates
 
 * Cover photos
