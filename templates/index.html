@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>My Mediamo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+                * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            color-scheme: light dark;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            background-color: black;
+            color: white;
+            transition: background-color 0.3s, color 0.3s;
+            overflow: hidden;
+             touch-action: pan-x pan-y;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #000000;
+                color: #FFFFFF;
+                 overflow: hidden;
+            }
+        }
+        i{color: #ffae00;}
+        .player {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 10px;
+            margin: 10px auto;
+            width: 100%;
+            max-width: 900px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .player .cover-img img {
+            background-color: rgba(0, 0, 0, 0.623);
+            border-radius: 18px;
+            width: 250px;
+            height: 250px;
+        }
+         .player-info{
+            padding: 5px;
+         }
+        .player-info h1{
+            font-size: 1.5rem;
+            
+        }
+        .player-info span{
+            font-size: 1rem;
+             
+        }
+        .player .player-btn {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .player .player-btn button {
+            font-size: 1.2rem;
+            padding: 15px;
+            margin: 10px;
+            border: none;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .player .player-btn button:active {
+            transform: scale(0.95);
+        }
+
+        .player-volume {
+            position: relative;
+
+        }
+
+        .player-volume button {
+            font-size: 1.2rem;
+            padding: 15px;
+            margin: 10px;
+            border: none;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            cursor: pointer;
+            width: 60px;
+            height: 60px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .player-volume button:active {
+            transform: scale(0.95);
+        }
+
+        /* Container’ın senin verdiğin hali */
+        .player-volume .range-container {
+            position: absolute;
+            top: -150px;
+            left: 15px;
+            width: 50px;
+            height: 150px;
+            background-color: #FFFFFF;
+            border-radius: 15px;
+            /* İçeride slider’ı ortalamak için flex */
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* —————————————————————————————— */
+        /* 1) Transform yöntemi (tüm tarayıcılarda) */
+        /* —————————————————————————————— */
+        .player-volume .range-container input[type=range] {
+            /* tarayıcı default stilini iptal et */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            /* slider’ı 90° döndür, transform-origin ile tam ortadan döndür */
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+
+            /* Dik haldeki kalınlığı (track yüksekliği) ve uzunluğu */
+            width: 150px;
+            /* container’ın height’ı kadar */
+            height: 8px;
+            /* track kalınlığı */
+            background: transparent;
+        }
+
+        /* Track (arka plan çubuğu) */
+        .player-volume .range-container input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            background: #007AFF;
+            border-radius: 2px;
+        }
+
+        .player-volume .range-container input[type=range]::-moz-range-track {
+            width: 100%;
+            height: 4px;
+            background: #007AFF;
+            border-radius: 2px;
+        }
+
+        /* Thumb (tutacak) */
+        .player-volume .range-container input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #555;
+            border-radius: 50%;
+            margin-top: -6px;
+            /* track ortasından oynama olmasın diye */
+        }
+
+        .player-volume .range-container input[type=range]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #555;
+            border-radius: 50%;
+            border: none;
+        }
+
+        /* —————————————————————————————— */
+        /* 2) Sadece WebKit (Chrome, Safari) için kısa yol */
+        /* —————————————————————————————— */
+        .player-volume .range-container input[type=range].webkit-vertical {
+            -webkit-appearance: slider-vertical;
+            width: 8px;
+            /* kalınlık */
+            height: 150px;
+            /* container’ın height’ı kadar */
+            background: #007AFF;
+            border-radius: 4px;
+        }
+
+        .player-volume .range-container input[type=range].webkit-vertical::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #555;
+            border-radius: 50%;
+        }
+
+        .range-container.active {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+  
+    <div class="player">
+          <h1>🎧 My Mediamo</h1>
+        <div class="cover-img">
+            <img src="https://imgs.search.brave.com/ecHZwB74ieK2eVkdTQmXGmaRSqjraowgY00rxT9Ohjs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzAxLzkwLzY5LzQ3/LzM2MF9GXzE5MDY5/NDczNl9TVFl4RlhP/dGFNbHliNEdLS0w3/bWZ4enVaVzgyZmEz/eC5qcGc" alt="Cover">
+        </div>
+        <div class="player-info">
+            <h1>This feature is not available at the moment.</h1>
+            <span>This feature is not available at the moment.</span>
+        </div>
+        <div class="player-scroll">
+            This feature is not available at the moment.
+        </div>
+        <div class="player-btn">
+            <button id="prevBtn"><i class="fas fa-backward"></i></button>
+            <button id="playPauseBtn"><i id="playPauseIcon" class="fas fa-play"></i></button>
+            <button id="nextBtn"><i class="fas fa-forward"></i></button>
+        </div>
+        <div class="player-volume">
+            <button id="volumeBtn"><i class="fas fa-volume-high"></i></button>
+            <div class="range-container" id="rangeContainer">
+                <input type="range" id="volumeSlider" min="0" max="100">
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        function send(path) {
+            fetch(`/${path}`);
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const prev = document.getElementById('prevBtn');
+            const playBtn = document.getElementById('playPauseBtn');
+            const playIcon = document.getElementById('playPauseIcon');
+            const next = document.getElementById('nextBtn');
+            const volBtn = document.getElementById('volumeBtn');
+            const range = document.getElementById('rangeContainer');
+            const slider = document.getElementById('volumeSlider');
+            let isPlaying = false;
+            prev.onclick = () => send('media/prev');
+            next.onclick = () => send('media/next');
+            playBtn.onclick = () => {
+                isPlaying = !isPlaying;
+                send(`media/${isPlaying ? 'play' : 'play'}`);
+                playIcon.className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+            };
+            // initialize volume
+            fetch('/volume/get')
+                .then(r => r.text())
+                .then(val => { slider.value = val; });
+            slider.oninput = () => send(`volume/set/${slider.value}`);
+            // toggle slider
+            volBtn.onclick = () => { range.style.display = range.style.display === 'flex' ? 'none' : 'flex'; };
+        });
+    </script>
+</body>
+
+</html>
