@@ -24,7 +24,7 @@ My Mediamo is a lightweight, browser-based remote media control app for your com
 
 1. Download or clone this repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/My-Mediamo.git
+   git clone https://github.com/mymiamo/My-Mediamo.git
    cd My-Mediamo
    ```
 
@@ -67,7 +67,7 @@ My Mediamo is a lightweight, browser-based remote media control app for your com
 
 - **SteelSeries Sonar:** Only controls "Gaming" audio; Media and other outputs are unaffected.
 
-> **Found a bug?** Please [open an issue](https://github.com/YOUR_USERNAME/My-Mediamo/issues) and help improve the project.
+> **Found a bug?** Please [open an issue](https://github.com/mymiamo/My-Mediamo/issues) and help improve the project.
 
 ---
 
