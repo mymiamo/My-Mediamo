@@ -1,12 +1,18 @@
 from flask import Flask, render_template
 from media_control import play_pause, next_track, prev_track, stop
 from volume_control import volume_up, volume_down, set_system_volume, get_system_volume
+ 
+
+import logging
+logging.basicConfig(filename="error.log", level=logging.ERROR)
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
     return render_template("index.html")
+
+ 
 
 @app.route("/media/<action>")
 def media_control(action):

@@ -1,49 +1,18 @@
-import comtypes
-from ctypes import cast, POINTER
-from comtypes import CLSCTX_ALL
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+import subprocess
 
-def with_com(func):
-    def wrapper(*args, **kwargs):
-        comtypes.CoInitialize()
-        try:
-            return func(*args, **kwargs)
-        finally:
-            comtypes.CoUninitialize()
-    return wrapper
+def set_system_volume(level):  # 0.0 - 1.0
+    subprocess.run(["python", "volume_worker.py", "set", str(level)], timeout=2)
 
-@with_com
-def get_volume_interface():
-    devices = AudioUtilities.GetSpeakers()
-    interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-    return cast(interface, POINTER(IAudioEndpointVolume))
-
-@with_com
-def volume_up():
-    volume = get_volume_interface()
-    current = volume.GetMasterVolumeLevelScalar()
-    volume.SetMasterVolumeLevelScalar(min(current + 0.05, 1.0), None)
-
-@with_com
-def volume_down():
-    volume = get_volume_interface()
-    current = volume.GetMasterVolumeLevelScalar()
-    volume.SetMasterVolumeLevelScalar(max(current - 0.05, 0.0), None)
-
-@with_com
-def set_system_volume(level):  # level: 0.0 - 1.0
-    level = float(level)
-    level = min(max(level, 0.0), 1.0)
-    volume = get_volume_interface()
-
-    if level == 0.0:
-        volume.SetMute(1, None)  # Sessize al
-    else:
-        volume.SetMute(0, None)  # Sessizden çıkar
-        volume.SetMasterVolumeLevelScalar(level, None)
-
-
-@with_com
 def get_system_volume():
-    volume = get_volume_interface()
-    return int(volume.GetMasterVolumeLevelScalar() * 100)
+    result = subprocess.run(["python", "volume_worker.py", "get"], capture_output=True, text=True, timeout=2)
+    return int(result.stdout.strip())
+
+def volume_up():
+    current = get_system_volume()
+    new = min(current + 5, 100)
+    set_system_volume(new / 100.0)
+
+def volume_down():
+    current = get_system_volume()
+    new = max(current - 5, 0)
+    set_system_volume(new / 100.0)
