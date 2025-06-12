@@ -14,6 +14,16 @@ My Mediamo is a lightweight, browser-based remote media control app for your com
 
 ---
 
+## 🖥️ Compatibility
+
+> * ✅ **Operating System:** Supported on **Windows 10/11 only** (due to use of pycaw and Windows COM-based APIs)
+> * ✅ **Browser:** Compatible with all modern mobile browsers (Safari, Chrome, Edge, Firefox)
+> * ✅ **Device:** Fully functional on both iOS and Android smartphones
+> * ⚠️ **Network:** Mobile device and PC must be connected to the **same local Wi-Fi network**
+> * ❌ **macOS / Linux:** Not supported (pycaw is Windows-only)
+> * **Python 3.10.11** is working stably.
+
+---
 ## 🛠️ Installation
 
 ### Requirements
